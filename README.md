@@ -47,7 +47,7 @@ Perfect for Valentine's Day, anniversaries, or any special occasion where you wa
 
 ### Option 2: Clone the Repository
 ```bash
-git clone https://github.com/yourusername/valentines-day-surprise.git
+git clone https://github.com/suhasjk07/valentines-day-surprise.git
 cd valentines-day-surprise
 open valentines-day.html
 ```
