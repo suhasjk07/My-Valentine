@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Valentine's Surprise ❤️</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose: #d4526e;
+            --deep-rose: #a23756;
+            --blush: #f7c6d3;
+            --cream: #fff5f7;
+            --burgundy: #5d001e;
+            --gold: #d4af37;
+            --shadow: rgba(210, 82, 110, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: linear-gradient(135deg, #1a0208 0%, #2d1115 25%, #1f0a0e 50%, #2d1115 75%, #1a0208 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* Floating hearts background */
+        .hearts-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .hearts-container.active {
+            opacity: 1;
+        }
+
+        .heart-bg {
+            position: absolute;
+            font-size: 20px;
+            color: var(--rose);
+            opacity: 0.15;
+            animation: floatHeart 8s infinite;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.15;
+            }
+            90% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Welcome screen */
+        .welcome-screen {
+            text-align: center;
+            max-width: 600px;
+            padding: 60px 40px;
+            background: rgba(255, 245, 247, 0.05);
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px var(--shadow);
+            animation: fadeInScale 1s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .welcome-screen h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            color: var(--blush);
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px var(--shadow);
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .welcome-screen p {
+            font-size: 1.4rem;
+            color: var(--cream);
+            margin-bottom: 40px;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .input-group {
+            margin-bottom: 30px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 18px 25px;
+            font-size: 1.3rem;
+            font-family: 'Cormorant Garamond', serif;
+            border: 2px solid var(--rose);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--burgundy);
+            text-align: center;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(93, 0, 30, 0.5);
+        }
+
+        .input-group input:focus {
+            transform: scale(1.02);
+            border-color: var(--gold);
+            box-shadow: 0 0 20px var(--shadow);
+        }
+
+        .btn {
+            padding: 18px 50px;
+            font-size: 1.3rem;
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--rose) 0%, var(--deep-rose) 100%);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .btn span {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Main experience screen */
+        .experience-screen {
+            display: none;
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .experience-screen.active {
+            display: block;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 900;
+            color: var(--gold);
+            margin-bottom: 30px;
+            text-shadow: 0 0 40px rgba(212, 175, 55, 0.5);
+            animation: titleReveal 1.5s ease-out;
+        }
+
+        @keyframes titleReveal {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .love-letter {
+            background: rgba(255, 245, 247, 0.1);
+            border-radius: 20px;
+            padding: 50px 40px;
+            margin: 40px 0;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px var(--shadow);
+            animation: letterSlide 1s ease-out 0.5s both;
+        }
+
+        @keyframes letterSlide {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .love-letter p {
+            font-size: 1.5rem;
+            line-height: 2;
+            color: var(--cream);
+            margin-bottom: 25px;
+            font-weight: 300;
+        }
+
+        .love-letter .signature {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-style: italic;
+            color: var(--gold);
+            margin-top: 30px;
+        }
+
+        /* Interactive cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+            animation: cardsReveal 1s ease-out 1s both;
+        }
+
+        @keyframes cardsReveal {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background: linear-gradient(135deg, rgba(212, 82, 110, 0.2) 0%, rgba(162, 55, 86, 0.2) 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            transform: scale(0);
+            transition: transform 0.6s ease;
+        }
+
+        .card:hover::before {
+            transform: scale(1);
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px var(--shadow);
+            border-color: var(--gold);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--blush);
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            color: var(--cream);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Surprise button */
+        .surprise-section {
+            margin-top: 60px;
+            animation: surpriseReveal 1s ease-out 1.5s both;
+        }
+
+        @keyframes surpriseReveal {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .surprise-btn {
+            background: linear-gradient(135deg, var(--gold) 0%, #b8941f 100%);
+            color: var(--burgundy);
+            font-size: 1.5rem;
+            padding: 25px 60px;
+            margin-top: 20px;
+        }
+
+        /* Modal for surprise */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            animation: modalFade 0.5s ease-out;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, var(--burgundy) 0%, var(--deep-rose) 100%);
+            padding: 60px 50px;
+            border-radius: 30px;
+            max-width: 600px;
+            text-align: center;
+            animation: modalSlide 0.6s ease-out;
+            border: 3px solid var(--gold);
+            box-shadow: 0 0 100px var(--gold);
+            position: relative;
+        }
+
+        @keyframes modalSlide {
+            from {
+                opacity: 0;
+                transform: scale(0.5) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .modal-content h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 30px;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .modal-content p {
+            font-size: 1.5rem;
+            color: var(--cream);
+            line-height: 2;
+            margin-bottom: 20px;
+        }
+
+        .heart-explosion {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 30px;
+            animation: explode 2s ease-out forwards;
+        }
+
+        @keyframes explode {
+            0% {
+                opacity: 1;
+                transform: translate(0, 0) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(0.5);
+            }
+        }
+
+        .close-modal {
+            margin-top: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .welcome-screen h1 {
+                font-size: 2.5rem;
+            }
+
+            .main-title {
+                font-size: 2.5rem;
+            }
+
+            .love-letter p {
+                font-size: 1.2rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                margin: 20px;
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating hearts background -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="welcome-screen" id="welcomeScreen">
+            <h1>💕 A Valentine's Surprise 💕</h1>
+            <p>This is a special message for someone extraordinary. Enter their name to begin the journey...</p>
+            <div class="input-group">
+                <input type="text" id="nameInput" placeholder="Enter your love's name..." />
+            </div>
+            <button class="btn" onclick="startExperience()">
+                <span>Begin the Experience ✨</span>
+            </button>
+        </div>
+
+        <!-- Main Experience Screen -->
+        <div class="experience-screen" id="experienceScreen">
+            <h1 class="main-title">Dear <span id="nameDisplay"></span>,</h1>
+            
+            <div class="love-letter">
+                <p>In a world full of ordinary moments, you are my extraordinary. Every day with you feels like a celebration of what love truly means.</p>
+                <p>You light up my life in ways words can barely capture. Your smile, your laughter, the way you see the world—everything about you makes my heart skip a beat.</p>
+                <p>This Valentine's Day, I want you to know that you are cherished, adored, and loved beyond measure. You are my forever Valentine.</p>
+                <div class="signature">Forever Yours ❤️</div>
+            </div>
+
+            <div class="cards-container">
+                <div class="card">
+                    <div class="card-icon">🌹</div>
+                    <h3>You're Beautiful</h3>
+                    <p>Inside and out, your beauty radiates and touches everyone around you</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>You're Special</h3>
+                    <p>There's no one else like you, and that's what makes you absolutely perfect</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">💝</div>
+                    <h3>You're Loved</h3>
+                    <p>More than yesterday, less than tomorrow, and infinitely every single day</p>
+                </div>
+            </div>
+
+            <div class="surprise-section">
+                <h2 style="font-family: 'Playfair Display', serif; font-size: 2rem; color: var(--blush); margin-bottom: 20px;">One more thing...</h2>
+                <button class="btn surprise-btn" onclick="showSurprise()">
+                    <span>Click for a Special Surprise 🎁</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Surprise Modal -->
+    <div class="modal" id="surpriseModal">
+        <div class="modal-content">
+            <div class="heart-explosion" id="heartExplosion"></div>
+            <h2>💖 I Love You! 💖</h2>
+            <p id="finalMessage"></p>
+            <p style="font-size: 4rem; margin: 30px 0;">❤️‍🔥</p>
+            <p>Happy Valentine's Day!</p>
+            <button class="btn close-modal" onclick="closeModal()">
+                <span>Close</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Generate floating hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('heartsContainer');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-bg';
+                heart.textContent = '❤️';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDelay = Math.random() * 8 + 's';
+                heart.style.animationDuration = (8 + Math.random() * 4) + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Start the experience
+        function startExperience() {
+            const nameInput = document.getElementById('nameInput');
+            const name = nameInput.value.trim();
+            
+            if (name === '') {
+                nameInput.style.borderColor = 'red';
+                nameInput.placeholder = 'Please enter a name! 💕';
+                return;
+            }
+
+            document.getElementById('nameDisplay').textContent = name;
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('experienceScreen').classList.add('active');
+            document.getElementById('heartsContainer').classList.add('active');
+        }
+
+        // Show surprise modal
+        function showSurprise() {
+            const name = document.getElementById('nameDisplay').textContent;
+            const messages = [
+                `${name}, you make every moment magical! 🌟`,
+                `${name}, you are the best thing that ever happened to me! 💫`,
+                `${name}, my heart belongs to you, today and always! 💕`,
+                `${name}, you're my favorite person in the whole world! 🌍`,
+                `${name}, I fall in love with you more every single day! 💗`
+            ];
+            
+            const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+            document.getElementById('finalMessage').textContent = randomMessage;
+            document.getElementById('surpriseModal').classList.add('active');
+            
+            // Create heart explosion
+            createHeartExplosion();
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('surpriseModal').classList.remove('active');
+        }
+
+        // Create heart explosion effect
+        function createHeartExplosion() {
+            const container = document.getElementById('heartExplosion');
+            container.innerHTML = '';
+            
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+            
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                
+                const angle = (Math.PI * 2 * i) / 20;
+                const distance = 150 + Math.random() * 100;
+                const tx = Math.cos(angle) * distance;
+                const ty = Math.sin(angle) * distance;
+                
+                heart.style.setProperty('--tx', tx + 'px');
+                heart.style.setProperty('--ty', ty + 'px');
+                heart.style.animationDelay = Math.random() * 0.2 + 's';
+                
+                container.appendChild(heart);
+            }
+        }
+
+        // Handle enter key
+        document.addEventListener('DOMContentLoaded', function() {
+            createFloatingHearts();
+            
+            document.getElementById('nameInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    startExperience();
+                }
+            });
+        });
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
